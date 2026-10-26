@@ -1,0 +1,13 @@
+{
+  "_comment": "Every brand you want scored. own=true marks yours; the rest are competitors. aliases are other spellings the models use (whole-word, case-insensitive). domains decide whether a cited source counts as that brand's page. Rank is relative to this list, so add competitors generously: a name you do not track cannot push you down the order. The entries below are placeholders. Replace them.",
+  "brands": [
+    {"name": "Blake's Hard Cider", "aliases": ["Blake's", "Blakes Hard Cider", "Blake's Cider"], "domains": ["blakeshardcider.com"], "own": true},
+    {"name": "Austin Eastciders", "aliases": ["Austin East Ciders", "Eastciders"], "domains": ["austineastciders.com"], "own": true},
+    {"name": "Angry Orchard", "aliases": [], "domains": ["angryorchard.com"]},
+    {"name": "Bold Rock", "aliases": ["Bold Rock Hard Cider"], "domains": ["boldrock.com"]},
+    {"name": "Woodchuck", "aliases": ["Woodchuck Hard Cider"], "domains": ["woodchuck.com"]},
+    {"name": "Ace Cider", "aliases": ["ACE Premium Craft Cider", "ACE"], "domains": ["acecider.com"]},
+    {"name": "Schilling", "aliases": ["Schilling Cider", "Schilling Hard Cider"], "domains": ["schillingcider.com"]},
+    {"name": "2 Towns", "aliases": ["2 Towns Ciderhouse", "Two Towns"], "domains": ["2townsciderhouse.com"]}
+  ]
+}

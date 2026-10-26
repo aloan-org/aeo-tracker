@@ -1,0 +1,4 @@
+.env
+runs/*/*/q*.json
+runs/*/collect-*.log
+__pycache__/

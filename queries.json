@@ -1,0 +1,25 @@
+{
+  "_comment": "The questions a buyer would actually type. Keep them stable from week to week: the trend is only comparable while the question set and the models stay fixed. Retire a query with \"status\": \"retired\" instead of deleting it so old runs still resolve. Categories are yours to define; we use them to split the report. Branded queries (ones that name your brand) are kept but reported separately, because they almost always mention you. These are placeholders. Replace them.",
+  "queries": [
+    {"id": 1, "category": "discovery", "text": "Best hard cider brands"},
+    {"id": 2, "category": "discovery", "text": "What are the best craft hard ciders in the US?"},
+    {"id": 3, "category": "discovery", "text": "Top hard cider brands to try in 2026"},
+    {"id": 4, "category": "discovery", "text": "Best dry hard cider"},
+    {"id": 5, "category": "discovery", "text": "Best semi-sweet hard cider"},
+    {"id": 6, "category": "discovery", "text": "Best hard cider for people who don't like beer"},
+    {"id": 7, "category": "discovery", "text": "Best gluten-free alcoholic drinks for a party"},
+    {"id": 8, "category": "regional", "text": "Best hard cider made in Michigan"},
+    {"id": 9, "category": "regional", "text": "Best hard cider made in Texas"},
+    {"id": 10, "category": "regional", "text": "Best cideries to visit in the Midwest"},
+    {"id": 11, "category": "comparison", "text": "Angry Orchard alternatives"},
+    {"id": 12, "category": "comparison", "text": "Which hard cider has the least sugar?"},
+    {"id": 13, "category": "comparison", "text": "Craft hard cider vs Angry Orchard, what's the difference?"},
+    {"id": 14, "category": "occasion", "text": "Best hard cider for Thanksgiving"},
+    {"id": 15, "category": "occasion", "text": "Best fall seasonal hard ciders"},
+    {"id": 16, "category": "occasion", "text": "Best canned cider to bring to a tailgate"},
+    {"id": 17, "category": "retail", "text": "Which hard cider brands are sold at Kroger?"},
+    {"id": 18, "category": "retail", "text": "Hard cider brands available on Instacart"},
+    {"id": 19, "category": "branded", "text": "Is Blake's Hard Cider good?"},
+    {"id": 20, "category": "branded", "text": "Austin Eastciders review"}
+  ]
+}
