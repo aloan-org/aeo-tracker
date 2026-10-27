@@ -1,0 +1,1 @@
+Read `AGENTS.md` and follow it. It is the setup runbook for this tracker: interview the person, write `brands.json` and `queries.json`, smoke test one query, run, check the matching, schedule weekly. `README.md` explains what the numbers mean.

@@ -447,8 +447,7 @@ echo "Results: $SCRIPT_DIR/runs/$DATE/"
 # Run analysis if requested
 if [ "$RUN_ANALYZE" = true ]; then
   echo ""
-  echo "=== Running analysis ==="
-  python3 "$SCRIPT_DIR/score.py" --date "$DATE"
-  echo ""
   echo "=== Scoring ==="
+  python3 "$SCRIPT_DIR/score.py" --date "$DATE"
+  python3 "$SCRIPT_DIR/dashboard.py"
 fi

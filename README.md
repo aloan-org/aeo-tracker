@@ -34,7 +34,12 @@ brands.json   ─┤
 - `collect.sh` loops over the active queries in `queries.json` and POSTs each one to each platform's API with web search turned on, the way a logged-in consumer gets it. Queries run concurrently per platform, platforms run in parallel, and transient failures (rate limits, 5xx, timeouts) retry in-run. A dead API key aborts that one platform after a single request instead of failing every query.
 - `extractors.py` is the only place that knows each platform's response shape. It returns the answer text and the list of source URLs. Add a platform there and nothing else changes.
 - `score.py` matches brand names (whole word, case-insensitive, aliases included) against the cleaned answer text, ranks them by first appearance, and checks the source URLs against each brand's domains.
+- `dashboard.py` renders `trend.csv`, `brands.json` and the latest `summary.csv` into `dashboard.html`.
 - `resolve-gemini-redirects.py` runs automatically after a Gemini collection. Gemini returns opaque redirect URLs for its sources; this follows each one (a HEAD request, redirects off) to get the real page URL. Tokens expire after a couple of weeks, so it has to run at collection time.
+
+## Handing this to an AI agent
+
+If you use Claude Code, Codex, Cursor or a similar agent, clone the repo and tell the agent to set it up. `AGENTS.md` (and `CLAUDE.md`, which points to it) is the runbook: it interviews you for brands, competitors and queries, writes the config, smoke tests one query for under a cent, does the first full run, checks the brand matching by eye, and schedules the weekly run on GitHub Actions or your laptop. You still provide the API keys and say yes before anything that costs money.
 
 ## Setup
 
@@ -47,7 +52,10 @@ brands.json   ─┤
 ```bash
 bash collect.sh --date 2026-11-03          # all platforms, all active queries
 python3 score.py --date 2026-11-03         # writes summary.csv, report.md, trend.csv
+python3 dashboard.py                       # writes dashboard.html from trend.csv + the latest run
 ```
+
+`dashboard.html` is one static file with no external scripts: a mention-rate trend per platform for each of your brands, the competitor table for the latest run with change against the previous one, and a query-by-query grid showing where each brand was named and whether its pages were cited. Open it locally or serve it from GitHub Pages.
 
 Partial runs for debugging or a missing platform:
 
@@ -58,7 +66,7 @@ bash collect.sh --queries 1,2,3 --date 2026-11-03
 
 ## Running it weekly
 
-Pick a day and keep it. Commit `queries.json`, `brands.json`, `trend.csv` and the dated `report.md` files; the raw `q*.json` answers are gitignored by default (they add up, roughly 20 MB a quarter for 50 queries on five platforms), but keeping them is worth it if you have the space, because every later question about "what did it actually say" is answered from the raw files.
+Pick a day and keep it. `.github/workflows/weekly.yml.example` is a ready GitHub Actions workflow: rename it, add the keys as repository secrets, and it collects, scores, renders the dashboard to `docs/index.html` and commits every Monday. Commit `queries.json`, `brands.json`, `trend.csv` and the dated `report.md` files; the raw `q*.json` answers are gitignored by default (they add up, roughly 20 MB a quarter for 50 queries on five platforms), but keeping them is worth it if you have the space, because every later question about "what did it actually say" is answered from the raw files.
 
 The scoring is only comparable week over week while two things are held constant:
 

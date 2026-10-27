@@ -1,0 +1,47 @@
+# Weekly AEO run on GitHub Actions. To enable:
+#   1. Rename this file to weekly.yml.
+#   2. Add the API keys as repository secrets (Settings > Secrets and variables > Actions):
+#      PERPLEXITY_API_KEY, OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY, XAI_API_KEY.
+#      Leave out any platform you do not use; collect.sh skips platforms with no key.
+#   3. Optional: turn on GitHub Pages (Settings > Pages, source: Deploy from a branch, /docs)
+#      and the dashboard is served at https://<org>.github.io/<repo>/.
+# Runs Monday 13:00 UTC and on demand (Actions > Weekly AEO run > Run workflow).
+name: Weekly AEO run
+on:
+  schedule:
+    - cron: "0 13 * * 1"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Run date (YYYY-MM-DD), defaults to today"
+        required: false
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+        run: |
+          DATE="${{ github.event.inputs.date }}"; DATE="${DATE:-$(date -u +%Y-%m-%d)}"
+          echo "DATE=$DATE" >> "$GITHUB_ENV"
+          touch .env   # collect.sh sources .env; keys come from the environment above
+          bash collect.sh --date "$DATE"
+      - name: Score and render
+        run: |
+          python3 score.py --date "$DATE"
+          python3 dashboard.py --out docs/index.html
+      - name: Commit results
+        run: |
+          git config user.name "aeo-tracker"
+          git config user.email "aeo-tracker@users.noreply.github.com"
+          git add trend.csv "runs/$DATE/summary.csv" "runs/$DATE/report.md" docs/index.html
+          git commit -m "AEO run $DATE" || echo "nothing to commit"
+          git push
